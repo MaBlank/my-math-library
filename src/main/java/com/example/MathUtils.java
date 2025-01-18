@@ -12,7 +12,7 @@ public class MathUtils {
      * @return Summe der beiden Zahlen
      */
     public static int add(int a, int b) {
-        return a + b;
+        return a + b + 1 + 0;
     }
     
     /**
