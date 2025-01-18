@@ -1,0 +1,36 @@
+name: Build and Test
+
+# Trigger: Wann soll die Action ausgeführt werden?
+on:
+  push:
+    branches:
+      - main # Bei jedem Push auf den main-Branch
+  pull_request:
+    branches:
+      - main # Bei jedem Pull-Request auf den main-Branch
+
+jobs:
+  build:
+    # Die Pipeline läuft auf einem Ubuntu-System
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository auschecken
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. JDK einrichten
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # Java-Distribution (z. B. OpenJDK)
+          java-version: '17'     # Gewünschte Java-Version
+
+      # 3. Maven-Build ausführen
+      - name: Build with Maven
+        run: mvn clean install
+
+      # 4. (Optional) Ergebnisse anzeigen
+      - name: Show test results
+        if: always()
+        run: cat target/surefire-reports/*.txt
